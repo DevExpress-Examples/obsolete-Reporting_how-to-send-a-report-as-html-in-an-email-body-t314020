@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 using DevExpress.XtraReports.UI;
@@ -13,10 +14,30 @@ namespace ConsoleApplication1 {
                 list.Add(new ReportData() { Value1 = i, Value2 = i, Value3 = i });
 
             XtraReport report = new XtraReport1() { DataSource = list };
-            using(SmtpClient client = new SmtpClient("mail.smtpclient.test", 25)) {
-                using(MailMessage message = report.ExportToMail("sender@test.test",
-                        "reciever1@test.test, reciever2@test.test, reciever3@test.test", "test")) {
-                    client.Send(message);
+
+            string SmtpHost = null;
+            int SmtpPort = -1;
+            if (string.IsNullOrEmpty(SmtpHost) || SmtpPort == -1)
+            {
+                System.Diagnostics.Debug.WriteLine("Please configure the SMTP server settings.");
+                return;
+            }
+
+            string SmtpUserName = "Enter_Sender_User_Name";
+            string SmtpUserPassword = "Enter_Sender_Password";
+
+            using (var smtpClient = new SmtpClient(SmtpHost, SmtpPort))
+            {
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.EnableSsl = false;
+
+                if (!string.IsNullOrEmpty(SmtpUserName))
+                {
+                    smtpClient.Credentials = new NetworkCredential(SmtpUserName, SmtpUserPassword);
+                }
+                using(MailMessage message = report.ExportToMail("someone@example.com",
+                        "reciepient1@example.com, reciepient2@example.com, reciepient3@example.com", "Enter_Message_Subject")) {
+                    smtpClient.Send(message);
                 }
             }   
         }

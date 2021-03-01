@@ -33,7 +33,7 @@ Namespace ConsoleApplication1
 				If Not String.IsNullOrEmpty(SmtpUserName) Then
 					smtpClient.Credentials = New NetworkCredential(SmtpUserName, SmtpUserPassword)
 				End If
-				Using message As MailMessage = report.ExportToMail("someone@example.com", "reciepient1@example.com, reciepient2@example.com, reciepient3@example.com", "Enter_Message_Subject")
+				Using message As MailMessage = report.ExportToMail("someone@example.com", "recipient1@example.com, recipient2@example.com, recipient3@example.com", "Enter_Message_Subject")
 					smtpClient.Send(message)
 				End Using
 			End Using

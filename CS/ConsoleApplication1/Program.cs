@@ -36,7 +36,7 @@ namespace ConsoleApplication1 {
                     smtpClient.Credentials = new NetworkCredential(SmtpUserName, SmtpUserPassword);
                 }
                 using(MailMessage message = report.ExportToMail("someone@example.com",
-                        "reciepient1@example.com, reciepient2@example.com, reciepient3@example.com", "Enter_Message_Subject")) {
+                        "recipient1@example.com, recipient2@example.com, recipient3@example.com", "Enter_Message_Subject")) {
                     smtpClient.Send(message);
                 }
             }   

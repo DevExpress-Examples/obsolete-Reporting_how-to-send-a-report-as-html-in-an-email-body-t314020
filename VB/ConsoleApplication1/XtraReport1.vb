@@ -1,3 +1,3 @@
-﻿Public Class XtraReport1
+Public Class XtraReport1
 
 End Class
